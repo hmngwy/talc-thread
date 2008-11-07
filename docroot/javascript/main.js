@@ -1,6 +1,5 @@
 window.addEvent('domready', function() {
 	
-	var POLLINTERVAL = 2000;
 	var INSERTINTERVAL = 400;
 	
 	var USERNAMEDEFAULT = 'yourname';
@@ -37,6 +36,7 @@ window.addEvent('domready', function() {
 	new Request({method: 'get', url: '/images/loader.gif'}).get();
 	
 	//PRESETS
+	set_topic('<span style="color:'+FADEDTEXTCOLOR+'">Loading...</span>');
 	enable_inputs();
 	
 	window.addEvent('load', notice_remask);
@@ -268,8 +268,8 @@ window.addEvent('domready', function() {
 	
 	function start_polling()
 	{
-			$clear(poll);
-			poll = update.periodical(POLLINTERVAL);
+		$clear(poll);
+		poll = update.periodical(1);
 	}
 	
 	
