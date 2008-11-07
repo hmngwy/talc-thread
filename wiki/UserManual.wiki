@@ -1,0 +1,14 @@
+#summary A how to page on everything
+
+_There is no interface for the admin part yet, all admin updates should go directly to the SQLite tables_
+
+To post a topic:
+  # INSERT INTO topic VALUES (NULL, 'Topic text here', date('Y-m-d H:i:s'))
+  # Do not leave the date field empty, as this will be used to mark the end of the previous topic.
+
+To lock the thread:
+  # UPDATE thread SET site-status='locked' WHERE ID=1
+  # You can also use maintenance instead of locked.
+
+To change the locked notice message:
+  # UPDATE thread SET site-notice='Went Fishing.' WHERE ID=1
