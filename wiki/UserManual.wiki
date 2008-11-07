@@ -1,5 +1,6 @@
 #summary A how to page on everything
 
+=Updating the thread=
 _There is no interface for the admin part yet, all admin updates should go directly to the SQLite tables_
 
 To post a topic:
@@ -12,3 +13,10 @@ To lock the thread:
 
 To change the locked notice message:
   # UPDATE thread SET site-notice='Went Fishing.' WHERE ID=1
+
+=Configuring the thread=
+
+To tune the polling intervals:
+  # Open up docroot/ajax/update.php
+  # $interval is the time between checking the database for new items, in seconds.
+  # $loops is the number of times the script will check the database per request.
