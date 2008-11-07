@@ -1,0 +1,6 @@
+#summary application platform requirements
+
+PHP 5 or above
+  * php_pdo
+  * php_pdo_sqlite
+  * php_sqlite
