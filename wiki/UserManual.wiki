@@ -14,7 +14,7 @@ To lock the thread:
 To change the locked notice message:
   # UPDATE thread SET site-notice='Went Fishing.' WHERE ID=1
 
-
+  
 ==Configuring the thread==
 
 To tune the polling intervals:
