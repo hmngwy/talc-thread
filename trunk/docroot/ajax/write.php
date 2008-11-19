@@ -10,7 +10,7 @@ if($_SESSION['site-status'] == 'ready')
 	
 	$_POST['username'] = htmlentities($_POST['username'], ENT_QUOTES);
 	$_POST['comment'] = htmlentities($_POST['comment'], ENT_QUOTES);
-		
+
 	try
 	{
 		$DB->exec('BEGIN TRANSACTION');
