@@ -118,28 +118,32 @@ window.addEvent('domready', function() {
 	
 	//INITIALIZE THE PAGE
 	var jsonRequest = new Request.JSON({url: INITRESOURCE, onComplete: function(response){
-    	set_site_status(response.site);
-    	set_topic(response.topic);
-    	
-    	if(response.username != null)
-    	{
-	    	username_input.set('value', response.username);
-    	}
-    	else
-    	{
-	    	username_input.set('value', USERNAMEDEFAULT);
-			username_input.set('style', 'color:'+FADEDTEXTCOLOR+';');
-    	}
-    	
-		if(response.comments != null)
-		{
-			insert_comments(response.comments);
-		}
-		else
-		{
-			start_polling();
-		}
 		
+		if(response != null)
+		{
+			
+			if(response.site != null)
+	    		set_site_status(response.site);
+	    		
+	    	if(response.topic != null)	
+	    	set_topic(response.topic);
+	    	
+	    	if(response.username != null)
+	    	{
+		    	username_input.set('value', response.username);
+	    	}
+	    	else
+	    	{
+		    	username_input.set('value', USERNAMEDEFAULT);
+				username_input.set('style', 'color:'+FADEDTEXTCOLOR+';');
+	    	}
+	    	
+			if(response.comments != null)
+			{
+				insert_comments(response.comments);
+			}
+			
+		}
 	}}).get();
 	
 	function insert_comments(comments)
@@ -150,7 +154,7 @@ window.addEvent('domready', function() {
 			var e = new Element('div', {html:text, 'class':'comment'});
 			e.inject(comments_list, 'top').slide('hide');
 			
-			hidden_comments.push(e);
+			if(e!=null) hidden_comments.push(e);
 		});
 		
 		hidden_comments = hidden_comments.reverse();
@@ -181,24 +185,26 @@ window.addEvent('domready', function() {
 		$clear(poll);
 		
 		long_poller = new Request.JSON({url: UPDATERESOURCE, onComplete: function(response){
-			
-			//UPDATE SITE STATUS
-			set_site_status(response.site);
-			
-			if(response.topic != null)
+			if(response!=null)
 			{
-				set_topic(response.topic);
+				//UPDATE SITE STATUS
+				if(response.site != null)
+					set_site_status(response.site);
+				
+				if(response.topic != null)
+				{
+					set_topic(response.topic);
+				}
+				
+				if(response.comments != null)
+				{
+					//THERE ARE ITEMS TO BE INSERTED
+					insert_comments(response.comments); //START INSERTING
+					postpone_polling(); //POSTPONE FETCHING OF UPDATES
+				}
+				
+				start_polling();
 			}
-			
-			if(response.comments != null)
-			{
-				//THERE ARE ITEMS TO BE INSERTED
-				insert_comments(response.comments); //START INSERTING
-				$clear(poll); //POSTPONE FETCHING OF UPDATES
-			}
-			
-			start_polling();
-					
 		}}).get();
 	}
 	
@@ -207,35 +213,36 @@ window.addEvent('domready', function() {
 		if(username_input.value!='' && comment_input.value!=''
 			&& username_input.value!=USERNAMEDEFAULT && comment_input.value!=COMMENTDEFAULT)
 		{
-			$clear(poll);
-			long_poller.cancel();
+			postpone_polling();
 			
 			disable_inputs();
 			
 			$('sep').set(LOADERSEPARATOR);
 						
 			var jsonRequest = new Request.JSON({url: WRITERESOURCE, onComplete: function(response){
-				
-				if(response.status=='success')
+				if(response != null)
 				{
-					//WE KNOW THAT THERE IS A NEW COMMENT, AND IT WILL BE SURE THAT function insert_comments() WILL BE CALLED
-					//THAT IN TURN WILL CONTINUE THE POLL
-					update();
-					comment_input.value = '';
+						
+					if(response.status=='success')
+					{
+						//WE KNOW THAT THERE IS A NEW COMMENT, AND IT WILL BE SURE THAT function insert_comments() WILL BE CALLED
+						//THAT IN TURN WILL CONTINUE THE POLL
+						update();
+						comment_input.value = '';
+					}
+					else if(response.status=='fail')
+					{
+						//CONTINUE THE POLL
+						start_polling();
+					}
+					
+					enable_inputs();
+					
+					username_input.focus(); //INVISIBLE CURSOR HACK
+					comment_input.focus();
+					
+					$('sep').set(INPUTSEPARATOR);
 				}
-				else if(response.status=='fail')
-				{
-					//CONTINUE THE POLL
-					start_polling();
-				}
-				
-				enable_inputs();
-				
-				username_input.focus(); //INVISIBLE CURSOR HACK
-				comment_input.focus();
-				
-				$('sep').set(INPUTSEPARATOR);
-				
 			}}).post({username:username_input.value, comment:comment_input.value});
 		}
 	}
@@ -266,12 +273,17 @@ window.addEvent('domready', function() {
 		}
 	}
 	
-	function start_polling()
+	function postpone_polling()
 	{
 		$clear(poll);
-		poll = update.periodical(1);
+		if(long_poller!=null) long_poller.cancel();
 	}
 	
+	function start_polling()
+	{
+		postpone_polling()
+		poll = update.periodical(1);
+	}
 	
 	//
 	function set_topic(text)
