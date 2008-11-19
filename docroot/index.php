@@ -28,7 +28,7 @@ $thread = $statement->fetch(PDO::FETCH_ASSOC);
 		</form>
 	</div>
 	<div id="footer">
-		<p>A talc thread, Powered by Talc Thread.</p>
+		<p><?php echo $thread['name']; ?>, Powered by Talc Thread.</p>
 	</div>
 </div>
 
