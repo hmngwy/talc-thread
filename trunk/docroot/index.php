@@ -1,3 +1,8 @@
+<?php
+$DB = new PDO('sqlite:../model/talk.sqlite');
+$statement = $DB->query('SELECT * FROM `thread` WHERE ID=1 LIMIT 1');
+$thread = $statement->fetch(PDO::FETCH_ASSOC);
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -5,7 +10,7 @@
 
 <head>
 
-<title>A talc thread</title>
+<title><?php echo $thread['name']; ?></title>
 <link rel="stylesheet" type="text/css"	href="/stylesheets/main.css"/>
 
 </head>
