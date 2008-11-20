@@ -34,7 +34,7 @@ $thread = $statement->fetch(PDO::FETCH_ASSOC);
 			
 			echo $count['count'];
 		?><!--COMMENT<?php echo ($count>1) ? 'S' : '' ; ?>--></a>&nbsp;
-		<a href="transcript.php?i=<?php echo $topic['ID']; ?>" class="topic-text"><?php echo $topic['text']; ?></a>
+		<a href="transcript/<?php echo $topic['ID']; ?>" class="topic-text"><?php echo $topic['text']; ?></a>
 		<br /><span class="topic-date">from <?php echo $topic['created_dt']; ?> to <?php echo $topic['end_dt']; ?></span>
 	</li>
 	<?php endwhile; /*END TOPIC LOOPING*/?>

@@ -4,6 +4,20 @@ $DB = new PDO('sqlite:../../model/talk.sqlite');
 
 $count = true;
 
+if($_POST['comment'] == '#logout')
+{
+	session_destroy();
+	
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+	header('Cache-Control: no-cache, no-store, must-revalidate');
+	header('Cache-Control: post-check=0, pre-check=0', FALSE); 
+	header('Pragma: no-cache'); 
+	header('Content-type: application/json');
+	
+	echo '{"status":"success", "comment":"'.$_POST['comment'].'"}';
+	die();
+}
+
 if($_SESSION['site-status'] == 'ready')
 {
 	$_SESSION['u'] = $_POST['username'];

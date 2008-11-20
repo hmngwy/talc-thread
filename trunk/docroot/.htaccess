@@ -1,0 +1,9 @@
+Options +FollowSymLinks
+IndexIgnore */*
+
+#Turn on the RewriteEngine
+RewriteEngine On
+
+#Rules
+RewriteRule ^archive/?$ archive.php
+RewriteRule ^transcript/[0-9]+/?$ transcript.php
