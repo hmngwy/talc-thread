@@ -5,5 +5,5 @@ IndexIgnore */*
 RewriteEngine On
 
 #Rules
-RewriteRule ^archive/?$ archive.php
-RewriteRule ^transcript/[0-9]+/?$ transcript.php
+RewriteRule ^archive/?$ archive.php [L]
+RewriteRule ^transcript/([0-9]+)/?$ transcript.php?i=$1 [L]

@@ -18,24 +18,21 @@ $thread = $statement->fetch(PDO::FETCH_ASSOC);
 
 <body id="home">
 <h2><?php echo $thread['name']; ?> Archive</h2>
-<?php $statement = $DB->query('SELECT * FROM `topic` ORDER BY `created_dt` DESC LIMIT -1 OFFSET 1'); ?>
+<?php $statement = $DB->query('SELECT * FROM `topic` ORDER BY `created_dt` DESC'); ?>
 
 <ol>
 	<?php while($topic = $statement->fetch(PDO::FETCH_ASSOC)) : ?>
 	<li>
 		<a href="transcript.php?i=<?php echo $topic['ID']; ?>" class="topic-msgs">
 		<?php
-			if($topic['end_dt'] == '0000-00-00 00:00:00')
-				$msgs = $DB->query('SELECT count(*) AS count FROM `message` WHERE `message`.`created_dt`>=\''.$topic['created_dt'].'\'');
-			else
-				$msgs = $DB->query('SELECT count(*) AS count FROM `message` WHERE `message`.`created_dt`>=\''.$topic['created_dt'].'\' AND `message`.`created_dt`<=\''.$topic['end_dt'].'\'');
+			$msgs = $DB->query('SELECT count(*) AS count FROM `message` WHERE `message`.`created_dt`>=\''.$topic['created_dt'].'\' AND `message`.`created_dt`<=\''.$topic['end_dt'].'\'');
 				
 			$count = $msgs->fetch(PDO::FETCH_ASSOC);
 			
 			echo $count['count'];
 		?><!--COMMENT<?php echo ($count>1) ? 'S' : '' ; ?>--></a>&nbsp;
 		<a href="transcript/<?php echo $topic['ID']; ?>" class="topic-text"><?php echo $topic['text']; ?></a>
-		<br /><span class="topic-date">from <?php echo $topic['created_dt']; ?> to <?php echo $topic['end_dt']; ?></span>
+		<br /><span class="topic-date"><strong>FROM</strong> <?php echo $topic['created_dt']; ?> <strong>TO</strong> <?php echo $topic['end_dt']; ?></span>
 	</li>
 	<?php endwhile; /*END TOPIC LOOPING*/?>
 </ol>
