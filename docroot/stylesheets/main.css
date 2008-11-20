@@ -16,7 +16,7 @@ div#main
 div#main #topic-text
 {
 	position:relative;
-	top:50px;
+	top:20px;
 }
 div#main #topic-text
 {
@@ -32,7 +32,7 @@ div#main #topic-text
 div#main #comments-list
 {
 	height:390px;
-	margin-top:60px;
+	margin-top:30px;
 	width:580px;
 	left:50%;
 	margin-left:-290px;
@@ -105,7 +105,7 @@ div#footer
 {
 	text-align:center;
 	font-size:11px;
-	margin-top:80px;
+	margin-top:30px;
 	margin-bottom:30px;
 }
 
