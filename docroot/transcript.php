@@ -1,9 +1,6 @@
 <?php
 $DB = new PDO('sqlite:../model/talk.sqlite');
 
-$statement = $DB->query('SELECT * FROM `thread` WHERE ID=1 LIMIT 1');
-$thread = $statement->fetch(PDO::FETCH_ASSOC);
-
 $statement = $DB->query('SELECT * FROM `topic` WHERE ID='.$_GET['i'].' LIMIT 1');
 $topic = $statement->fetch(PDO::FETCH_ASSOC);
 ?>
@@ -14,27 +11,33 @@ $topic = $statement->fetch(PDO::FETCH_ASSOC);
 
 <head>
 
-<title><?php echo $topic['text']; ?> &laquo; <?php echo $thread['name'] ?> Archive</title>
-<link rel="stylesheet" type="text/css"	href="/stylesheets/archive.css"/>
+<title>Talk Transcript: <?php echo $topic['text']; ?></title>
+<link rel="stylesheet" type="text/css"	href="/stylesheets/transcript.css"/>
 
 
 </head>
 
 <body id="home">
-<h2><?php echo $topic['text']; ?></h2>
+<span class="msg-count">
+<?php
+	$msgs = $DB->query('SELECT count(*) AS count FROM `message` WHERE `message`.`created_dt`>=\''.$topic['created_dt'].'\' AND `message`.`created_dt`<=\''.$topic['end_dt'].'\'');	
+	$count = $msgs->fetch(PDO::FETCH_ASSOC);
+	echo $count['count'];
+?>
+</span>
+<h2><?php echo $topic['text']; ?></h2><br />
+<span class="topic-dates"><strong>FROM</strong> <?php echo $topic['created_dt']; ?> <strong>TO</strong> <?php echo $topic['end_dt']; ?></span>
+
 <?php $statement = $DB->query('SELECT * FROM `message` WHERE `created_dt`>=\''.$topic['created_dt'].'\' AND `created_dt`<=\''.$topic['end_dt'].'\' ORDER BY `created_dt` ASC'); ?>
 
 <ol>
 	<?php while($message = $statement->fetch(PDO::FETCH_ASSOC)) : ?>
 	<li>
-		
-		<span class="topic-text"><?php echo $message['name']; ?></span>&nbsp;&#8594;&nbsp;<span class="topic-text"><?php echo $message['text']; ?></span>
-		
-		<br /><span class="topic-date"><?php echo $message['created_dt']; ?></span>
+		<span class="msg-name"><?php echo $message['name']; ?></span>:&nbsp;<span class="msg-text"><?php echo $message['text']; ?></span>
+		<!--<span class="topic-date"><?php echo $message['created_dt']; ?></span>-->
 	</li>
-	<?php endwhile; /*END TOPIC LOOPING*/?>
+	<?php endwhile; ?>
 </ol>
-
 </body>
 
 </html>

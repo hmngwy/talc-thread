@@ -1,0 +1,70 @@
+body
+{
+	margin:0;
+	padding:0;
+	font-family:"Trebuchet MS";
+	margin-left:25px;
+	margin-top:20px;
+}
+
+span.msg-count
+{
+	position:relative;
+	top:-4px;
+	padding:4px 11px 4px 11px;
+	font-size:20px;
+	font-family:"Arial";
+	background:#333;
+	color:#F4F4F4;
+	text-decoration:none;
+	font-weight:bold;
+	margin-right:15px;
+}
+
+h2
+{
+	display:inline;	
+	font-size:30px;
+	font-weight:bold;
+}
+
+span.topic-dates
+{
+	position:relative;
+	top:8px;
+	margin-left:3px;
+	font-size:12px;
+	color:#777;
+}
+
+ol
+{
+	margin:35px 10px 10px 15px;
+	width:600px;
+}
+
+li
+{
+	list-style:none;
+	line-height:20px;
+	margin-bottom:15px;
+}
+
+span.msg-name
+{
+	border-bottom:1px dashed #999;
+}
+
+span.msg-text
+{
+}
+
+span.topic-dates
+{
+	font-size:12px;
+	color:#666;
+}
+span.topic-dates strong
+{
+	color:#999;
+}
