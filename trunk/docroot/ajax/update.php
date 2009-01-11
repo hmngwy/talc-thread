@@ -16,7 +16,7 @@ while($count<$loops)
 	$count++;
 	$statement = $DB->query('SELECT * FROM `thread` WHERE `thread`.`ID`=1');
 	$thread = $statement->fetch(PDO::FETCH_ASSOC);
-	
+	$changed = false;
 	
 	if($_SESSION['site-status'] != $thread['site-status'] ||
 		$_SESSION['site-notice'] != $thread['site-notice'])

@@ -40,7 +40,7 @@ if($_SESSION['site-status'] == 'ready')
 		}
 		
 		$DB->exec('BEGIN TRANSACTION');
-		$DB->exec('INSERT INTO `identity` VALUES(NULL, \''.$ip.'\', \''.$_SERVER['REMOTE_HOST'].'\', \''.$_SERVER['REMOTE_PORT'].'\', \''.$_SERVER['REQUEST_TIME'].'\', \''.$_SERVER['HTTP_USER_AGENT'].'\', \''.$_SERVER['HTTP_REFERER'].'\')');
+		$DB->exec('INSERT INTO `identity` VALUES(NULL, \''.$ip.'\', \''.( (isset($_SERVER['REMOTE_HOST'])) ? $_SERVER['REMOTE_HOST'] : '' ).'\', \''.$_SERVER['REMOTE_PORT'].'\', \''.$_SERVER['REQUEST_TIME'].'\', \''.$_SERVER['HTTP_USER_AGENT'].'\', \''.$_SERVER['HTTP_REFERER'].'\')');
 		$count = $DB->exec('INSERT INTO `message` VALUES(NULL, \''.$_POST['username'].'\', \''.$_POST['comment'].'\', '.$DB->lastInsertId().', datetime(\'now\'), NULL)');
 		
 		if($count===false)
