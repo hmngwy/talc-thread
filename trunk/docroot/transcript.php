@@ -23,6 +23,8 @@ $topic = $statement->fetch(PDO::FETCH_ASSOC);
 
 <head>
 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+
 <title>Talk Transcript: <?php echo $topic['text']; ?></title>
 <link rel="stylesheet" type="text/css"	href="/stylesheets/transcript.css"/>
 
