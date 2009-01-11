@@ -63,7 +63,7 @@ header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 header('Cache-Control: no-cache, no-store, must-revalidate');
 header('Cache-Control: post-check=0, pre-check=0', FALSE); 
 header('Pragma: no-cache'); 
-header('Content-type: application/json');
+header('Content-type: application/json; charset=utf-8');
 
 echo json_encode($object);
 ?>

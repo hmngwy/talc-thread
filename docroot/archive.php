@@ -15,6 +15,8 @@ $thread = $statement->fetch(PDO::FETCH_ASSOC);
 
 <head>
 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
+
 <title><?php echo $thread['name']; ?> Archive</title>
 <link rel="stylesheet" type="text/css"	href="/stylesheets/archive.css"/>
 
