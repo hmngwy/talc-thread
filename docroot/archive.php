@@ -1,4 +1,9 @@
 <?php
+if($_SERVER['REQUEST_URI'] == $_SERVER["SCRIPT_NAME"])
+{
+	header('HTTP/1.1 301 Moved Permanently');
+	header('Location: /archive');
+}
 $DB = new PDO('sqlite:../model/talk.sqlite');
 $statement = $DB->query('SELECT * FROM `thread` WHERE ID=1 LIMIT 1');
 $thread = $statement->fetch(PDO::FETCH_ASSOC);
@@ -18,7 +23,7 @@ $thread = $statement->fetch(PDO::FETCH_ASSOC);
 
 <body id="home">
 <h2><?php echo $thread['name']; ?> Archive</h2>
-<?php $statement = $DB->query('SELECT * FROM `topic` ORDER BY `created_dt` DESC'); ?>
+<?php $statement = $DB->query('SELECT * FROM `topic` WHERE `topic`.`end_dt`!=\'0000-00-00 00:00:00\' ORDER BY `created_dt` DESC'); ?>
 
 <ol>
 	<?php while($topic = $statement->fetch(PDO::FETCH_ASSOC)) : ?>
