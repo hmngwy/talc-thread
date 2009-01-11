@@ -1,4 +1,16 @@
 <?php
+if($_SERVER['REQUEST_URI'] == $_SERVER["SCRIPT_NAME"])
+{
+	if(isset($_GET['i']))
+	{
+		header('HTTP/1.1 301 Moved Permanently');
+		header('Location: /transcript/'.$_GET['i']);
+	}
+	else
+	{
+		header('HTTP/1.1 404 Not Found');
+	}
+}
 $DB = new PDO('sqlite:../model/talk.sqlite');
 
 $statement = $DB->query('SELECT * FROM `topic` WHERE ID='.$_GET['i'].' LIMIT 1');
