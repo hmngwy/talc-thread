@@ -124,10 +124,9 @@ div#notice #notice-poster
 {
 	position:absolute;
 	left:50%;
-	top:50%;
+	top:170px;
 	width:250px;
 	margin-left:-125px;
-	margin-top:-150px;
 	text-align:center;
 }
 
