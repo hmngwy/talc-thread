@@ -1,4 +1,5 @@
 <?php
+include 'json_encode.fx.php';
 session_start();
 $DB = new PDO('sqlite:../../model/talk.sqlite');
 
